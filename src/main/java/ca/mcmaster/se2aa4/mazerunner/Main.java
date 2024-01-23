@@ -25,9 +25,9 @@ public class Main {
         Configuration config = new Configuration(args);
         Random random = buildReproducibleGenerator(config.seed());
         Maze theMaze = new Maze(config.width(), config.height());
-        theMaze.carve(random);
-        MazeExporter exporter = new MazeExporter(theMaze);
-        exporter.export(config.outputFile());
+        // theMaze.carve(random);
+        // MazeExporter exporter = new MazeExporter(theMaze);
+        // exporter.export(config.outputFile());
     
         try {
             
