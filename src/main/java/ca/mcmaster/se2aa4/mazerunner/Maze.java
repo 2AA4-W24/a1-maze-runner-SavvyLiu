@@ -5,7 +5,7 @@ import java.util.ArrayList;
 public class Maze {
     private int x = 0;
     private int y = 0;
-    ArrayList<String> cars = new ArrayList<String>();
+    ArrayList<String> grid = new ArrayList<String>();
     public Maze(){
         
     }
