@@ -2,7 +2,6 @@ package ca.mcmaster.se2aa4.mazerunner;
 
 import java.io.BufferedReader;
 import java.io.File;
-import java.nio.file.Files;
 import java.io.FileReader;
 import java.util.Random;
 import org.apache.logging.log4j.LogManager;
@@ -15,6 +14,21 @@ public class Main {
 
     private static final Logger logger = LogManager.getLogger();
 
+    public static int[] dimensions(String path) throws Exception{
+        BufferedReader reader = new BufferedReader(new FileReader(path));
+        int x = 0;
+        int y = 0;
+        String line = reader.readLine();
+        for (int i = 0; i < line.length(); i++){
+            x++;
+        }
+        while((line = reader.readLine()) != null){
+            y++;
+        }
+        int[] output = {x, y+1};
+        return output;
+    }
+
     private static Maze ReadMaze(String[] args) throws Exception{
         Configurator.setAllLevels(LogManager.getRootLogger().getName(), Level.ALL);
         Options options = new Options();
@@ -25,17 +39,22 @@ public class Main {
         logger.info("**** Reading the maze from file " + file_path);
         BufferedReader reader = new BufferedReader(new FileReader(file_path));
         String line;
-        Maze toSolve = new Maze(); 
+
+        int[] mazeDimension = dimensions(file_path);
+
+        Maze toSolve = new Maze(mazeDimension[0], mazeDimension[1]); 
         while ((line = reader.readLine()) != null) {
             for (int idx = 0; idx < line.length(); idx++) {
                 if (line.charAt(idx) == '#') {
-                    System.out.print("WALL ");
+                    toSolve.wall(true);
                 } else if (line.charAt(idx) == ' ') {
-                    System.out.print("PASS ");
+                    toSolve.wall(false);
                 }
-                System.out.print(System.lineSeparator());
+                toSolve.goRight();
             }
+            toSolve.goDown();
         }
+        toSolve.print();
         return toSolve;
     }
 
@@ -46,7 +65,7 @@ public class Main {
             Maze toSolve = ReadMaze(args);
             Solver solver = new Solver(toSolve);
         } catch(Exception e){
-            logger.error("/!\\ An error has occured /!\\");
+            logger.error("/!\\ An error has occured /!\\" + e);
         }
 
         logger.info("**** Computing path");
