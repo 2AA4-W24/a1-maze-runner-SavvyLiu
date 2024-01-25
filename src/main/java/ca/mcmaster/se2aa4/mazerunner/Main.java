@@ -64,9 +64,6 @@ public class Main {
         try{
             Maze toSolve = ReadMaze(args);
             Solver solver = new Solver(toSolve);
-            System.out.println(toSolve.enterance());
-            solver.solve();
-            solver.result();
         } catch(Exception e){
             logger.error("/!\\ An error has occured /!\\" + e);
         }
