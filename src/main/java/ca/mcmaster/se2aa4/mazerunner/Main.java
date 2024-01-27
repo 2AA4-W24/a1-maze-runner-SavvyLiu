@@ -3,6 +3,7 @@ package ca.mcmaster.se2aa4.mazerunner;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
+import java.text.ParseException;
 import java.util.Random;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -25,11 +26,13 @@ public class Main {
         while((line = reader.readLine()) != null){
             y++;
         }
-        int[] output = {x, y+1};
+        int[] output = {y+1, x};
         return output;
     }
 
-    private static Maze ReadMaze(String[] args) throws Exception{
+    
+
+    private static Maze readMaze(String[] args) throws Exception{
         Configurator.setAllLevels(LogManager.getRootLogger().getName(), Level.ALL);
         Options options = new Options();
         options.addOption("i", true, "Maze file path");
@@ -41,7 +44,6 @@ public class Main {
         String line;
 
         int[] mazeDimension = dimensions(file_path);
-
         Maze toSolve = new Maze(mazeDimension[0], mazeDimension[1]); 
         while ((line = reader.readLine()) != null) {
             for (int idx = 0; idx < line.length(); idx++) {
@@ -62,13 +64,13 @@ public class Main {
         logger.info("** Starting Maze Runner");
         logger.info("Here goes the business code");
         try{
-            Maze toSolve = ReadMaze(args);
+            Maze toSolve = readMaze(args);
             Solver solver = new Solver(toSolve);
-            System.out.println(toSolve.enterance());
             solver.solve();
             solver.result();
         } catch(Exception e){
             logger.error("/!\\ An error has occured /!\\" + e);
+            e.printStackTrace();
         }
 
         logger.info("**** Computing path");

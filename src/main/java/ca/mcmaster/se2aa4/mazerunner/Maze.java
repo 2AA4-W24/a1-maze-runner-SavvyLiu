@@ -1,11 +1,11 @@
 package ca.mcmaster.se2aa4.mazerunner;
 import java.util.Arrays;
 public class Maze {
-    private int x = 0;
     private int y = 0;
+    private int x = 0;
     private String[][] grid;
 
-    public Maze(int x, int y){
+    public Maze(int y, int x){
         grid = new String[y][x];
         for (int i = 0; i < y; i++){
             Arrays.fill(grid[i], " ");
@@ -26,6 +26,30 @@ public class Maze {
 
     public int ySize(){
         return grid.length;
+    }
+    
+
+    // returns an array with Booleans, with index 0 representing whether or not there is an opening in the right direction, index 1 representing down,
+    // index 2 representing left, and index 3 representing up. The indexes align with the Solver class's direction array indexes.
+    public boolean[] surroundings(int y, int x){
+        // boolean arrays default to false
+        boolean[] output = new boolean[4];
+        if (grid[y][Math.min(xSize()-1, x+1)].equals(" ")){
+            output[0] = true;
+        }
+            
+        if (grid[Math.max(0, y-1)][x].equals(" ")){
+            output[1] = true;
+        }
+            
+        if (grid[y][Math.min(0, x-1)].equals(" ")){
+            output[2] = true;
+        }
+            
+        if (grid[Math.min(ySize()-1, y+1)][x].equals(" ")){
+            output[3] = true;
+        }
+        return output;
     }
 
     public int enterance(){
@@ -53,8 +77,5 @@ public class Maze {
             System.out.println();
         }
     }
+} 
 
-    public void fix(){
-        
-    }
-}
