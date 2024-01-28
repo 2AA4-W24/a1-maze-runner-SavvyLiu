@@ -1,8 +1,8 @@
 package ca.mcmaster.se2aa4.mazerunner;
 import java.util.Arrays;
 public class Maze {
-    private int y = 0;
-    private int x = 0;
+    public int y = 0;
+    public int x = 0;
     private String[][] grid;
 
     public Maze(int y, int x){
@@ -12,10 +12,10 @@ public class Maze {
         }
     }
 
-    public void goRight(){
+    public void buildRight(){
         x++;
     }
-    public void goDown(){
+    public void buildDown(){
         x = 0;
         y++;
     }
@@ -33,22 +33,26 @@ public class Maze {
     // index 2 representing left, and index 3 representing up. The indexes align with the Solver class's direction array indexes.
     public boolean[] surroundings(int y, int x){
         // boolean arrays default to false
+        System.out.println("x" + x);
+        System.out.println("y" + y);
+        
         boolean[] output = new boolean[4];
         if (grid[y][Math.min(xSize()-1, x+1)].equals(" ")){
             output[0] = true;
         }
             
-        if (grid[Math.max(0, y-1)][x].equals(" ")){
+        if (grid[Math.min(ySize()-1, y+1)][x].equals(" ")){
             output[1] = true;
         }
             
-        if (grid[y][Math.min(0, x-1)].equals(" ")){
+        if (grid[y][Math.max(0, x-1)].equals(" ")){
             output[2] = true;
         }
             
-        if (grid[Math.min(ySize()-1, y+1)][x].equals(" ")){
+        if (grid[Math.max(0, y-1)][x].equals(" ")){
             output[3] = true;
         }
+        // left and right swapped, hits dead end and loops infinite, need to add turn around case
         return output;
     }
 

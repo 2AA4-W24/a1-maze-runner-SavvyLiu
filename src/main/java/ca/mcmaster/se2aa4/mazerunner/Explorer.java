@@ -29,12 +29,13 @@ public class Explorer {
     }
 
     public void turnLeft(){
-        direction = (direction - 1)%4;
+        direction = (direction + 3)%4;
     }
 
     public int direction(){
         return direction;
     }
+
 
     public void move(){
         switch (direction){
@@ -42,13 +43,13 @@ public class Explorer {
                 x++;
                 break;
             case(1):
-                y--;
+                y++;
                 break;
             case(2):
                 x--;
                 break;
             case(3):
-                y++;
+                y--;
                 break;
         }
     }

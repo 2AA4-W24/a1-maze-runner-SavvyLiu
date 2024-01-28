@@ -21,33 +21,68 @@ public class Solver {
     }
 
     public void solve(){
-        explorer.place(toSolve.enterance(), 0);
+        explorer.place(0, toSolve.enterance());
+        int count = 0;
         while (explorer.getX() != toSolve.xSize()){
+
             boolean[] surroundings = toSolve.surroundings(explorer.getY(), explorer.getX());
-            if (surroundings[explorer.direction()]){
-                System.out.println("F");
+            System.out.println("dirction: " + explorer.direction());
+            if (checkRight(surroundings)){
+                explorer.turnRight();
                 explorer.move();
+                System.out.println("right");
+                recordMovement(directions.R);
                 recordMovement(directions.F);
-            } else if (checkStright(surroundings)){
-                // removes the exit from this coordinate that was 180 degrees from the direction currently facing.
-                // This makes sure the explorer doesnt go backwards.
-                surroundings[(explorer.direction()+2)%4] = false;
-                while(!surroundings[explorer.direction()]){
-                    explorer.turnRight();
-                    System.out.println("R");
-                    recordMovement(directions.R);
+                count++;
+                if (count > 100){
+                    break;
+                }
+
+
+            } else if (checkForward(surroundings)){
+                explorer.move();
+                System.out.println("forward");
+                recordMovement(directions.F);
+                
+            } 
+            else if (checkLeft(surroundings)){
+                explorer.turnLeft();
+                explorer.move();
+                System.out.println("turning left");
+                recordMovement(directions.L);
+                recordMovement(directions.F);
+                count++;
+                if (count > 100){
+                    break;
                 }
             } else {
                 explorer.turnRight();
-                System.out.println("R");
+                explorer.turnRight();
+                System.out.println("turn around");
+                explorer.move();
                 recordMovement(directions.R);
+                recordMovement(directions.R);
+                recordMovement(directions.F);
             }
         }
 
     }
 
-    // This method counts the number of openings surrounding a coordinate. If it is less than or equal to 2, it returns true, which represents
+    public boolean checkRight(boolean[] surroundings){
+        return surroundings[(explorer.direction() + 1) % 4];
+    }
+
+    public boolean checkForward(boolean[] surroundings){
+        return surroundings[(explorer.direction())];
+    }
+
+    public boolean checkLeft(boolean[] surroundings){
+        return surroundings[(explorer.direction() + 3) % 4];
+    }
+
+    // This method counts the number of openings surrounding a coordinate. If it is equal to 2, it returns true, which represents
     // the fact that there is only one choice to advance through that particular section. 
+
     public boolean checkStright(boolean[] in){
         int count = 0;
         for (Boolean b: in){
@@ -55,10 +90,36 @@ public class Solver {
                 count++;
             }
         }
-        if (count > 2){
-            return false;
+        if (count == 2){
+            return true;
         }
-        return true;
+        return false;
+    }
+
+    public boolean checkDeadEnd(boolean[] surroundings){
+        int count = 0;
+        for (Boolean b: surroundings){
+            if (b) {
+                count++;
+            }
+        }
+        if (count == 1){
+            return true;
+        }
+        return false;
+    }
+
+    public boolean checkSplit(boolean[] surroundings){
+        int count = 0;
+        for (Boolean b: surroundings){
+            if (b) {
+                count++;
+            }
+        }
+        if (count >= 3){
+            return true;
+        }
+        return false;
     }
 
     public void recordMovement(directions d){

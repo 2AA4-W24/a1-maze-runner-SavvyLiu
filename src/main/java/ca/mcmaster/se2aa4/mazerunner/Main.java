@@ -26,6 +26,7 @@ public class Main {
         while((line = reader.readLine()) != null){
             y++;
         }
+        // Adds 1 to y since the initial readline() call to retrieve and calculate length of a line advances the reader by one line
         int[] output = {y+1, x};
         return output;
     }
@@ -36,9 +37,14 @@ public class Main {
         Configurator.setAllLevels(LogManager.getRootLogger().getName(), Level.ALL);
         Options options = new Options();
         options.addOption("i", true, "Maze file path");
+        options.addOption("p", false, "Verify mode");
         CommandLineParser parser = new DefaultParser();
         CommandLine cmd = parser.parse(options, args);
         String file_path = cmd.getOptionValue("i");
+
+        boolean verifyMode = cmd.hasOption("p");
+
+
         logger.info("**** Reading the maze from file " + file_path);
         BufferedReader reader = new BufferedReader(new FileReader(file_path));
         String line;
@@ -52,9 +58,9 @@ public class Main {
                 } else if (line.charAt(idx) == ' ') {
                     toSolve.wall(false);
                 }
-                toSolve.goRight();
+                toSolve.buildRight();
             }
-            toSolve.goDown();
+            toSolve.buildDown();
         }
         toSolve.print();
         return toSolve;
