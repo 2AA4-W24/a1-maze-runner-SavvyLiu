@@ -19,7 +19,7 @@ public class Solver {
     }
 
     public void solve(){
-        explorer.place(toSolve.enterance(), 0);
+        explorer.place(toSolve.leftEnterance(), 0);
         while (!toSolve.checkExit(explorer.getX())){
 
             boolean[] surroundings = toSolve.surroundings(explorer.getY(), explorer.getX());

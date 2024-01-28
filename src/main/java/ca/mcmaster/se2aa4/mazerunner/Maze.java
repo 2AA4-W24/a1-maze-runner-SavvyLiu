@@ -57,8 +57,8 @@ public class Maze {
         }
         return output;
     }
-    // finds the y coordinate of the opening of the maze, which must be in the first column
-    public int enterance(){
+    // finds the y coordinate of the left opening of the maze, which must be in the first column
+    public int leftEnterance(){
         for (int i = 0; i < y; i++){
             if (grid[i][0].equals(" ")){
                 return i;
@@ -66,6 +66,17 @@ public class Maze {
         }
         return 0;
     }
+    // finds the y coordinate of the right opening of the maze, which must be in the last column
+
+    public int rightEnterance(){
+        for (int i = 0; i < y; i++){
+            if (grid[i][xSize() - 1].equals(" ")){
+                return i;
+            }
+        }
+        return 0;
+    }
+
     // the exit of the maze must be when the x coordinate is on the right edge
     public boolean checkExit(int x){
         return (x == xSize());
