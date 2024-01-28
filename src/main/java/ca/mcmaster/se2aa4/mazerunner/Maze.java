@@ -11,6 +11,8 @@ public class Maze {
             Arrays.fill(grid[i], " ");
         }
     }
+    // These methods are only used to keep track of the dimensions of the array while it is being constructed.
+    // An implementation using arraylist wouldn't require this.
 
     public void buildRight(){
         x++;
@@ -30,13 +32,14 @@ public class Maze {
     
 
     // returns an array with Booleans, with index 0 representing whether or not there is an opening in the right direction, index 1 representing down,
-    // index 2 representing left, and index 3 representing up. The indexes align with the Solver class's direction array indexes.
+    // index 2 representing left, and index 3 representing up. The indexes align with the Explorer class's direction array indexes.
     public boolean[] surroundings(int y, int x){
         // boolean arrays default to false
         System.out.println("x" + x);
         System.out.println("y" + y);
         
         boolean[] output = new boolean[4];
+        // Min and max methods are used to ensure coordinates outside of the size of the maze are not checked.
         if (grid[y][Math.min(xSize()-1, x+1)].equals(" ")){
             output[0] = true;
         }
@@ -52,19 +55,25 @@ public class Maze {
         if (grid[Math.max(0, y-1)][x].equals(" ")){
             output[3] = true;
         }
-        // left and right swapped, hits dead end and loops infinite, need to add turn around case
         return output;
     }
-
+    // finds the y coordinate of the opening of the maze, which must be in the first column
     public int enterance(){
         for (int i = 0; i < y; i++){
-            if (grid[i][0] == null || grid[i][0].equals(" ")){
+            if (grid[i][0].equals(" ")){
                 return i;
             }
         }
         return 0;
     }
+    // the exit of the maze must be when the x coordinate is on the right edge
+    public boolean checkExit(int x){
+        return (x == xSize());
+    } 
 
+    public boolean isOpen(int y, int x){
+        return grid[y][x].equals(" ");
+    }
     public void wall(Boolean t){
         if (t){
             grid[y][x] = "#";

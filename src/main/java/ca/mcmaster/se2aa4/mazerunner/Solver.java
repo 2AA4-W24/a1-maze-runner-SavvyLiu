@@ -13,17 +13,14 @@ public class Solver {
         F
       }
 
-      
-
     public Solver(Maze toSolve) { 
         this.toSolve = toSolve;
         explorer = new Explorer();
     }
 
     public void solve(){
-        explorer.place(0, toSolve.enterance());
-        int count = 0;
-        while (explorer.getX() != toSolve.xSize()){
+        explorer.place(toSolve.enterance(), 0);
+        while (!toSolve.checkExit(explorer.getX())){
 
             boolean[] surroundings = toSolve.surroundings(explorer.getY(), explorer.getX());
             System.out.println("dirction: " + explorer.direction());
@@ -33,11 +30,6 @@ public class Solver {
                 System.out.println("right");
                 recordMovement(directions.R);
                 recordMovement(directions.F);
-                count++;
-                if (count > 100){
-                    break;
-                }
-
 
             } else if (checkForward(surroundings)){
                 explorer.move();
@@ -51,10 +43,7 @@ public class Solver {
                 System.out.println("turning left");
                 recordMovement(directions.L);
                 recordMovement(directions.F);
-                count++;
-                if (count > 100){
-                    break;
-                }
+
             } else {
                 explorer.turnRight();
                 explorer.turnRight();
@@ -80,47 +69,8 @@ public class Solver {
         return surroundings[(explorer.direction() + 3) % 4];
     }
 
-    // This method counts the number of openings surrounding a coordinate. If it is equal to 2, it returns true, which represents
-    // the fact that there is only one choice to advance through that particular section. 
 
-    public boolean checkStright(boolean[] in){
-        int count = 0;
-        for (Boolean b: in){
-            if (b) {
-                count++;
-            }
-        }
-        if (count == 2){
-            return true;
-        }
-        return false;
-    }
 
-    public boolean checkDeadEnd(boolean[] surroundings){
-        int count = 0;
-        for (Boolean b: surroundings){
-            if (b) {
-                count++;
-            }
-        }
-        if (count == 1){
-            return true;
-        }
-        return false;
-    }
-
-    public boolean checkSplit(boolean[] surroundings){
-        int count = 0;
-        for (Boolean b: surroundings){
-            if (b) {
-                count++;
-            }
-        }
-        if (count >= 3){
-            return true;
-        }
-        return false;
-    }
 
     public void recordMovement(directions d){
         switch (d){

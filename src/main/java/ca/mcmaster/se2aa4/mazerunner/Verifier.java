@@ -3,32 +3,47 @@ package ca.mcmaster.se2aa4.mazerunner;
 import ca.mcmaster.se2aa4.mazerunner.Maze;
 
 public class Verifier {
-    enum directions {
-        R,
-        L,
-        U,
-        D
-      }
 
     private Maze toVerify;
     private String path;
-    private int[] explorer = new int[1];
-    private directions direction = directions.R;
+
     public Verifier(Maze toVerify, String path){
         this.toVerify = toVerify;
         this.path = path;
-        explorer[0] = toVerify.enterance();
-        explorer[1] = 0;
     }
 
     public Boolean verify(){
+        Explorer explorer = new Explorer();
+        explorer.place(toVerify.enterance(), 0);
         for (int i = 0; i < path.length(); i++){
+            if (explorer.getY() > toVerify.ySize() || explorer.getX() > toVerify.xSize()){
+                return false;
+            }
+            if (!toVerify.isOpen(explorer.getY(), explorer.getX())){
+                System.out.print(i + " ");
+                System.out.print(explorer.getY() + " ");
+                System.out.print(explorer.getX() + " ");
+                return false;
+            }
             switch (path.charAt(i)){
-                case('R'):
+                case('R'):{
+                    explorer.turnRight();
                     break;
+                }
+                case('F'):{
+                    explorer.move();
+                    break;
+                }
+                case('L'):{
+                    explorer.turnLeft();
+                    break;
+                }
             }
         }
-        return true;
+        if (toVerify.checkExit(explorer.getX())){
+            return true;
+        }
+        return false;
     }
 
 

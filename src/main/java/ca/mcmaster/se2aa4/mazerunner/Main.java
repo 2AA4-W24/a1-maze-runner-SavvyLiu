@@ -72,8 +72,10 @@ public class Main {
         try{
             Maze toSolve = readMaze(args);
             Solver solver = new Solver(toSolve);
+            Verifier verifier = new Verifier(toSolve, "FFFFFRRFFRFFRFFRRFFRFFRFFFF");
             solver.solve();
             solver.result();
+            System.out.println(verifier.verify());
         } catch(Exception e){
             logger.error("/!\\ An error has occured /!\\" + e);
             e.printStackTrace();

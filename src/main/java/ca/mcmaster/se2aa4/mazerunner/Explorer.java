@@ -5,7 +5,7 @@ public class Explorer {
     private int y;
     // direction is implemented as an int mod 4, where direction mod 4 = 0 represents right, direction mod 4 = 1 represents down, 
     // direction mod 4 = 2 represents left, and direction mod 4 = 3 represents up. In this way, incrementing direction has the effect
-    // of turning right, and decrementing has the effect of turning left.
+    // of turning right, and turning left can be represented by incrementing by 3.
     private int direction;
     public Explorer(){
         x = 0;
@@ -13,7 +13,7 @@ public class Explorer {
         direction = 0;
     }
 
-    public void place(int x, int y){
+    public void place(int y, int x){
         this.x = x;
         this.y = y;
     }
@@ -35,7 +35,6 @@ public class Explorer {
     public int direction(){
         return direction;
     }
-
 
     public void move(){
         switch (direction){
