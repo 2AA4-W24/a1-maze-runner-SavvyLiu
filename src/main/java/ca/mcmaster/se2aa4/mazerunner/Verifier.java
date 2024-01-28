@@ -11,18 +11,15 @@ public class Verifier {
         this.toVerify = toVerify;
         this.path = path;
     }
-
+    // the verifier only works on paths that go from left to right
     public Boolean verify(){
         Explorer explorer = new Explorer();
         explorer.place(toVerify.enterance(), 0);
         for (int i = 0; i < path.length(); i++){
-            if (explorer.getY() > toVerify.ySize() || explorer.getX() > toVerify.xSize()){
+            if (explorer.getY() >= toVerify.ySize() || explorer.getX() >= toVerify.xSize()){
                 return false;
             }
             if (!toVerify.isOpen(explorer.getY(), explorer.getX())){
-                System.out.print(i + " ");
-                System.out.print(explorer.getY() + " ");
-                System.out.print(explorer.getX() + " ");
                 return false;
             }
             switch (path.charAt(i)){
