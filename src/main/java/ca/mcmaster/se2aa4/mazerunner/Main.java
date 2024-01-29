@@ -27,7 +27,7 @@ public class Main {
             } else {
                 Solver solver = new Solver(maze);
                 solver.solve();
-                solver.result();
+                solver.printPath();
             }
 
         } catch(Exception e){

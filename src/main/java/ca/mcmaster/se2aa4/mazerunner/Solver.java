@@ -2,12 +2,12 @@ package ca.mcmaster.se2aa4.mazerunner;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-public class Solver {
-    public ArrayList<String> output = new ArrayList<String>();
-    Maze toSolve;
-    Explorer explorer;
+public class Solver implements SolverGeneric{
+    private ArrayList<String> output;
+    private Maze toSolve;
+    private Explorer explorer;
 
-    enum directions {
+    private enum directions {
         R,
         L,
         F
@@ -15,15 +15,16 @@ public class Solver {
 
     public Solver(Maze toSolve) { 
         this.toSolve = toSolve;
-        explorer = new Explorer();
+        this.explorer = new Explorer();
+        this.output = new ArrayList<String>();
     }
-
+    
     public void solve(){
         explorer.place(toSolve.leftEnterance(), 0);
         while (!toSolve.checkExit(explorer.getX())){
 
             boolean[] surroundings = toSolve.surroundings(explorer.getY(), explorer.getX());
-            System.out.println("dirction: " + explorer.direction());
+
             if (checkRight(surroundings)){
                 explorer.turnRight();
                 explorer.move();
@@ -57,22 +58,22 @@ public class Solver {
 
     }
 
-    public boolean checkRight(boolean[] surroundings){
+    private boolean checkRight(boolean[] surroundings){
         return surroundings[(explorer.direction() + 1) % 4];
     }
 
-    public boolean checkForward(boolean[] surroundings){
+    private boolean checkForward(boolean[] surroundings){
         return surroundings[(explorer.direction())];
     }
 
-    public boolean checkLeft(boolean[] surroundings){
+    private boolean checkLeft(boolean[] surroundings){
         return surroundings[(explorer.direction() + 3) % 4];
     }
 
 
 
 
-    public void recordMovement(directions d){
+    private void recordMovement(directions d){
         switch (d){
             case R:
                 output.add("R");
@@ -86,7 +87,11 @@ public class Solver {
         }
     }
 
-    public void result(){
+    public ArrayList<String> outputPath(){
+        return output;
+    }
+
+    public void printPath(){
         for (int i = 0; i < output.size(); i++){
             System.out.print(output.get(i));
         }

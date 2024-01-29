@@ -13,10 +13,9 @@ import org.apache.logging.log4j.Level;
 
 public class MazeReader{
     private static final Logger logger = LogManager.getLogger();
-    Maze maze;
-    String file_path;
-    boolean verifyMode;
-    String maze_path;
+    private String file_path;
+    private boolean verifyMode;
+    private String maze_path;
     public MazeReader(String[] args) throws Exception{
         Configurator.setAllLevels(LogManager.getRootLogger().getName(), Level.ALL);
         Options options = new Options();
@@ -60,7 +59,7 @@ public class MazeReader{
         return maze_path;
     }
     // method to find dimensions of the maze in the provided file
-    public static int[] dimensions(String path) throws Exception{
+    private static int[] dimensions(String path) throws Exception{
         BufferedReader reader = new BufferedReader(new FileReader(path));
         int x = 0;
         int y = 0;

@@ -7,6 +7,7 @@ public class Explorer {
     // direction mod 4 = 2 represents left, and direction mod 4 = 3 represents up. In this way, incrementing direction has the effect
     // of turning right, and turning left can be represented by incrementing by 3.
     private int direction;
+    
     public Explorer(){
         x = 0;
         y = 0;

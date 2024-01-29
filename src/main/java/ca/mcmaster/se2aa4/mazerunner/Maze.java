@@ -1,8 +1,8 @@
 package ca.mcmaster.se2aa4.mazerunner;
 import java.util.Arrays;
 public class Maze {
-    public int y = 0;
-    public int x = 0;
+    private int y = 0;
+    private int x = 0;
     private String[][] grid;
 
     public Maze(int y, int x){
@@ -34,10 +34,7 @@ public class Maze {
     // returns an array with Booleans, with index 0 representing whether or not there is an opening in the right direction, index 1 representing down,
     // index 2 representing left, and index 3 representing up. The indexes align with the Explorer class's direction array indexes.
     public boolean[] surroundings(int y, int x){
-        // boolean arrays default to false
-        System.out.println("x" + x);
-        System.out.println("y" + y);
-        
+        // boolean arrays default elements are false
         boolean[] output = new boolean[4];
         // Min and max methods are used to ensure coordinates outside of the size of the maze are not checked.
         if (grid[y][Math.min(xSize()-1, x+1)].equals(" ")){
@@ -79,7 +76,7 @@ public class Maze {
 
     // the exit of the maze must be when the x coordinate is on the right edge
     public boolean checkExit(int x){
-        return (x == xSize());
+        return (x == xSize() - 1);
     } 
 
     public boolean isOpen(int y, int x){
