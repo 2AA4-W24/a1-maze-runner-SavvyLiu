@@ -5,23 +5,23 @@ import ca.mcmaster.se2aa4.mazerunner.Maze;
 public class Verifier {
 
     private Maze toVerify;
-    private String path;
+    private Path path;
 
-    public Verifier(Maze toVerify, String path){
+    public Verifier(Maze toVerify, String inputPath){
         this.toVerify = toVerify;
-        this.path = path;
+        this.path = new Path(inputPath);
     }
-    public Boolean verifyLeftToRight(){
+    private Boolean verifyLeftToRight(){
         Explorer explorer = new Explorer();
         explorer.place(toVerify.leftEnterance(), 0);
-        for (int i = 0; i < path.length(); i++){
+        for (int i = 0; i < path.size(); i++){
             if (explorer.getY() >= toVerify.ySize() || explorer.getX() >= toVerify.xSize()){
                 return false;
             }
             if (!toVerify.isOpen(explorer.getY(), explorer.getX())){
                 return false;
             }
-            switch (path.charAt(i)){
+            switch (path.movementAt(i)){
                 case('R'):{
                     explorer.turnRight();
                     break;
@@ -42,20 +42,20 @@ public class Verifier {
         return false;
     }
 
-    public Boolean verifyRightToLeft(){
+    private Boolean verifyRightToLeft(){
         Explorer explorer = new Explorer();
         explorer.place(toVerify.rightEnterance(), 0);
         // turns explorer around from facing right to facing left
         explorer.turnRight();
         explorer.turnRight();
-        for (int i = 0; i < path.length(); i++){
+        for (int i = 0; i < path.size(); i++){
             if (explorer.getY() >= toVerify.ySize() || explorer.getX() >= toVerify.xSize()){
                 return false;
             }
             if (!toVerify.isOpen(explorer.getY(), explorer.getX())){
                 return false;
             }
-            switch (path.charAt(i)){
+            switch (path.movementAt(i)){
                 case('R'):{
                     explorer.turnRight();
                     break;

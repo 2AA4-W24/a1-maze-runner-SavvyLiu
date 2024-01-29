@@ -1,9 +1,7 @@
 package ca.mcmaster.se2aa4.mazerunner;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 public class Solver implements SolverGeneric{
-    private ArrayList<String> output;
+    private Path output;
     private Maze toSolve;
     private Explorer explorer;
 
@@ -16,7 +14,7 @@ public class Solver implements SolverGeneric{
     public Solver(Maze toSolve) { 
         this.toSolve = toSolve;
         this.explorer = new Explorer();
-        this.output = new ArrayList<String>();
+        this.output = new Path();
     }
     
     public void solve(){
@@ -76,25 +74,18 @@ public class Solver implements SolverGeneric{
     private void recordMovement(directions d){
         switch (d){
             case R:
-                output.add("R");
+                output.addOne('R');
                 break;
             case L:
-                output.add("L");
+                output.addOne('L');
                 break;
             case F:
-                output.add("F");
+                output.addOne('F');
                 break;
         }
-    }
-
-    public ArrayList<String> outputPath(){
-        return output;
     }
 
     public void printPath(){
-        for (int i = 0; i < output.size(); i++){
-            System.out.print(output.get(i));
-        }
-        System.out.println();
+        output.printPath();
     }
 } 
