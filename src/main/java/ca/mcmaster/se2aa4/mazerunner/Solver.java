@@ -26,27 +26,23 @@ public class Solver implements SolverGeneric{
             if (checkRight(surroundings)){
                 explorer.turnRight();
                 explorer.move();
-                System.out.println("right");
                 recordMovement(directions.R);
                 recordMovement(directions.F);
 
             } else if (checkForward(surroundings)){
                 explorer.move();
-                System.out.println("forward");
                 recordMovement(directions.F);
                 
             } 
             else if (checkLeft(surroundings)){
                 explorer.turnLeft();
                 explorer.move();
-                System.out.println("turning left");
                 recordMovement(directions.L);
                 recordMovement(directions.F);
 
             } else {
                 explorer.turnRight();
                 explorer.turnRight();
-                System.out.println("turn around");
                 explorer.move();
                 recordMovement(directions.R);
                 recordMovement(directions.R);
@@ -88,4 +84,9 @@ public class Solver implements SolverGeneric{
     public void printPath(){
         output.printPath();
     }
+
+    public void printFactorizedPath(){
+        output.factorize();
+    }
+
 } 

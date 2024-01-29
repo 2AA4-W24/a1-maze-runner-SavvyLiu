@@ -27,7 +27,7 @@ public class MazeReader{
         this.verifyMode = cmd.hasOption("p");
         this.maze_path = cmd.getOptionValue("p");
     }
-
+    // Reader does not read factorized paths since it was unclear whethere or not that was a requirement.
     public Maze read() throws Exception{
         logger.info("**** Reading the maze from file " + file_path);
         BufferedReader reader = new BufferedReader(new FileReader(file_path));

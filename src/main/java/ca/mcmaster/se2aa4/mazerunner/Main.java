@@ -27,7 +27,10 @@ public class Main {
             } else {
                 Solver solver = new Solver(maze);
                 solver.solve();
+                System.out.println("Canonical:");
                 solver.printPath();
+                System.out.println("Factorized:");
+                solver.printFactorizedPath();
             }
 
         } catch(Exception e){

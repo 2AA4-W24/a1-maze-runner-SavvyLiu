@@ -5,4 +5,5 @@ import java.util.ArrayList;
 public interface SolverGeneric{
     public void solve();
     public void printPath();
+    public void printFactorizedPath();
 }
