@@ -1,20 +1,14 @@
 package ca.mcmaster.se2aa4.mazerunner;
 
 public class Path {
-    private String output;
-    private String factorized;
+    private String output = "";
+    private String factorized = "";
     public Path(){
-        output = "";
-        factorized = "";
+
     }
 
     public Path(String toVerify){
-        for (int i = 0; i < toVerify.length(); i++){
-            output += (toVerify.charAt(i));
-            if (output.charAt(i) != output.charAt(i)){
-
-            }
-        }
+        output = toVerify;
     }
     public void addOne(char movement){
         output += movement;
@@ -47,10 +41,21 @@ public class Path {
                 if (repeats > 1){
                     factorized += (repeats);
                 }
+                System.out.println(i);
+                System.out.println(output.charAt(0));
                 factorized += (output.charAt(i));
+                System.out.println(factorized);
                 repeats = 1;
             }
         }
-        System.out.println(factorized);
+        factorized += output.charAt(output.length() - 1);
+    }
+
+    public String getCanonicalForm(){
+        return output;
+    }
+
+    public String getFactorizedForm(){
+        return factorized;
     }
 }
